@@ -41,11 +41,11 @@ class AuthController extends Controller
                 $response = ['token' => $token];
                 return response($response, 200);
             } else {
-                $response = ['msg' => 'Password missmatch'];
+                $response = ['message' => 'Password missmatch'];
                 return response($response, 422);
             }
         } else {
-            $response = ['msg' => 'User does not exist'];
+            $response = ['message' => 'User does not exist'];
             return response($response, 422);
         }
     }
@@ -55,7 +55,7 @@ class AuthController extends Controller
         $token = $request->user()->token();
         $token->revoke();
 
-        $response = ['msg' => 'You have been succesfully logged out!'];
+        $response = ['message' => 'You have been succesfully logged out!'];
         return response($response, 200);
     }
 }
