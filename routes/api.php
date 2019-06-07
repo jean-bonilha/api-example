@@ -15,10 +15,6 @@ use Illuminate\Http\Request;
 
 Route::group(['middleware' => ['json.response']], function () {
 
-    Route::middleware('auth:api')->get('/user', function (Request $request) {
-        return $request->user();
-    });
-
     // public routes
     Route::post('/login', 'Api\AuthController@login')->name('login');
     Route::post('/register', 'Api\AuthController@register')->name('register');
