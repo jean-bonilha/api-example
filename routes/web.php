@@ -12,5 +12,5 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
-});
+    return response(['message' => 'Unauthorizated.'], 403);
+})->name('root');
