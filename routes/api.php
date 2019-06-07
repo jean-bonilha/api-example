@@ -20,8 +20,8 @@ Route::group(['middleware' => ['json.response']], function () {
     });
 
     // public routes
-    Route::post('/login', 'Api\AuthController@login')->name('login.api');
-    Route::post('/register', 'Api\AuthController@register')->name('register.api');
+    Route::post('/login', 'Api\AuthController@login')->name('login');
+    Route::post('/register', 'Api\AuthController@register')->name('register');
 
     // private routes
     Route::middleware('auth:api')->group(function () {
