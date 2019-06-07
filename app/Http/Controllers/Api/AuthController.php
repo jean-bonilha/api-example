@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use Hash;
 use App\User;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
