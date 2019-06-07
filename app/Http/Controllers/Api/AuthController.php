@@ -4,31 +4,34 @@ namespace App\Http\Controllers\Api;
 
 use Hash;
 use App\User;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\UserController;
 
-class AuthController extends Controller
+class AuthController extends UserController
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+
+    }
+
     public function register(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
-        ]);
+        $storeResponse = $this->store($request);
 
-        if ($validator->fails()) {
-            return response(['errors' => $validator->errors()->all()], 422);
+        if (gettype($storeResponse) === 'array') {
+            $response = ['errors' => $storeResponse];
+            return response($response, 422);
         }
 
-        $request['password'] = Hash::make($request['password']);
-        $user = User::create($request->toArray());
-
-        $token = $user->createToken('Laravel Password Grant Client')->accessToken;
+        $token = $storeResponse->createToken('Laravel Password Grant Client')->accessToken;
         $response = ['token' => $token];
 
-        return response($response, 200);
+        return response($response, 201);
     }
 
     public function login(Request $request)
