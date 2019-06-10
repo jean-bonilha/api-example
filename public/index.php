@@ -1,5 +1,10 @@
 <?php
 
+header('Access-Control-Allow-Headers: Authorization, Content-Type, X-Requested-With, Access-Control-Allow-Origin');
+header('Content-Type: Application/json');
+header('X-Requested-With: XMLHttpRequest');
+header('Access-Control-Allow-Origin: *');
+
 /**
  * Laravel - A PHP Framework For Web Artisans
  *
