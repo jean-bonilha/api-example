@@ -30,6 +30,11 @@ class AuthController extends UserController
         $user = User::where('email', $request->email)->first();
 
         if ($user) {
+            if (!boolval($user->activated)) {
+                return response()->json([
+                    'message' => 'User is not activated.'
+                ]);
+            }
             if (Hash::check($request->password, $user->password)) {
                 $token = $user->createToken('Laravel Password Grant Client')->accessToken;
                 $properties = $user->toArray();
