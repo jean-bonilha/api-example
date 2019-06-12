@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -22,7 +20,10 @@ Route::group(['middleware' => ['json.response']], function () {
     // private routes
     Route::middleware('auth:api')->group(function () {
         Route::get('/logout', 'Api\AuthController@logout')->name('logout');
-        Route::get('/user', 'Api\AuthController@user')->name('user');
+        Route::get('/auth/user', 'Api\AuthController@user')->name('user');
+        Route::apiResources([
+            'user' => 'UserController'
+        ]);
     });
 
 });

@@ -4,21 +4,12 @@ namespace App\Http\Controllers\Api;
 
 use Hash;
 use App\User;
+use App\Http\Controllers\Firebase\FirebaseAuthController;
 use Illuminate\Http\Request;
 use App\Http\Controllers\UserController;
 
 class AuthController extends UserController
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-
-    }
-
     public function register(Request $request)
     {
         $storeResponse = $this->store($request);
@@ -41,6 +32,14 @@ class AuthController extends UserController
         if ($user) {
             if (Hash::check($request->password, $user->password)) {
                 $token = $user->createToken('Laravel Password Grant Client')->accessToken;
+                $properties = $user->toArray();
+                $properties['password'] = $request->password;
+                $firebaseUserSave = (new FirebaseAuthController)->store($properties);
+                if (!$firebaseUserSave) {
+                    return response()->json([
+                        'message' => 'Save user on Firebase service failed.'
+                    ]);
+                }
                 $response = ['token' => $token];
                 return response($response, 200);
             } else {
@@ -59,10 +58,17 @@ class AuthController extends UserController
 
     public function logout(Request $request)
     {
-        $token = $request->user()->token();
+        $user = $request->user();
+        $token = $user->token();
         $token->revoke();
+        $response = [];
 
-        $response = ['message' => 'You have been succesfully logged out!'];
+        $firebaseUserSave = (new FirebaseAuthController)->destroyByEmail($user->email);
+        if (!$firebaseUserSave) {
+            $response['farebase'] = 'User logout on Firebase service failed.';
+        }
+
+        $response['message'] = 'You have been succesfully logged out!';
         return response($response, 200);
     }
 }
