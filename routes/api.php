@@ -14,6 +14,7 @@
 // App v1 API
 Route::group([
     'middleware' => ['api.version:1'],
+    'namespace' => 'Api',
     'prefix'     => 'v1',
 ], function ($router) {
     require base_path('routes/app_api.v1.php');
