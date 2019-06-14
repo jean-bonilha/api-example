@@ -13,7 +13,7 @@
 
 // App v1 API
 Route::group([
-    'middleware' => ['app', 'api.version:1'],
+    'middleware' => ['api.version:1'],
     'prefix'     => 'v1',
 ], function ($router) {
     require base_path('routes/app_api.v1.php');
