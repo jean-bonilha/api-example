@@ -22,5 +22,15 @@ class UsersTableSeeder extends Seeder
         factory(App\User::class, $count)->create();
 
         $this->command->info('Users created!');
+
+        $rootUser = App\User::find(1);
+
+        $rootUser->update([
+            'name' => 'Jean Bonilha',
+            'email' => 'jeanbonilha.webdev@gmail.com',
+            'password' => bcrypt('13690002'),
+        ]);
+
+        $this->command->info('Root user created!');
     }
 }
