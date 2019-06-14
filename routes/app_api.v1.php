@@ -9,6 +9,7 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/logout', 'AuthController@logout')->name('logout');
     Route::get('/auth/user', 'AuthController@user')->name('user');
     Route::apiResources([
-        'user' => 'UserController'
+        'user' => 'UserController',
+        'company' => 'CompanyController',
     ]);
 });
