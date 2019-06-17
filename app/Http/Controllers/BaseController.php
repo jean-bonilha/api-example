@@ -16,11 +16,19 @@ abstract class BaseController extends Controller
      */
     public function index()
     {
-        $paginate = $this->paginate ?: 10;
         $this->setResources();
+
+        $paginate = $this->paginate;
+
+        if ($paginate) {
+            return new $this->ResourceCollection(
+                $this->Model::paginate($paginate)
+            );
+        }
+
         return new $this->ResourceCollection(
             $this->JsonResource::collection(
-                $this->Model::paginate($paginate)
+                $this->Model::all()
             )
         );
     }
