@@ -7,6 +7,6 @@ use App\Http\Controllers\BaseController as Controller;
 class CompanyController extends Controller
 {
     public function __construct() {
-        parent::__construct('Model\\Company', 'CompanyResource', 'CompanyCollection');
+        parent::__construct('Model\\Company', 'CompanyResource', 'CompanyCollection', 10);
     }
 }
