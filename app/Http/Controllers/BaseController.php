@@ -45,7 +45,7 @@ abstract class BaseController extends Controller
         try {
             return response()->json([
                 'message' => $this->Model::create($request->all())
-            ]);
+            ], 201);
         } catch (\Throwable $th) {
             return response()->json([
                 'message' => $th->getMessage()
@@ -81,7 +81,7 @@ abstract class BaseController extends Controller
             $itemUpdate = $this->Model::find($id);
             return response()->json([
                 'message' => $itemUpdate->update($request->all())
-            ]);
+            ], 200);
         } catch (\Throwable $th) {
             return response()->json([
                 'message' => $th->getMessage()
@@ -101,7 +101,7 @@ abstract class BaseController extends Controller
         try {
             return response()->json([
                 'message' => $this->Model::find($id)->delete()
-            ]);
+            ], 200);
         } catch (\Throwable $th) {
             return response()->json([
                 'message' => $th->getMessage()
