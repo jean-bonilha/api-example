@@ -13,13 +13,11 @@ class CompaniesTableSeeder extends Seeder
     {
         // How to many companies you need, defaulting to 10
 
-        $count = (int)$this->command->ask('How to companies do you need ?', 10);
-
-        $this->command->info("Creating {$count} companies.");
+        $this->command->info("Creating 5 companies.");
 
         // Create the companies
 
-        factory(App\Model\Company::class, $count)->create();
+        factory(App\Model\Company::class, 5)->create();
 
         $this->command->info('Companies created!');
     }
