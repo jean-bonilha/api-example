@@ -11,19 +11,11 @@
 |
 */
 
-Route::group(['middleware' => ['json.response']], function () {
-
-    // public routes
-    Route::post('/login', 'Api\AuthController@login')->name('login');
-    Route::post('/register', 'Api\AuthController@register')->name('register');
-
-    // private routes
-    Route::middleware('auth:api')->group(function () {
-        Route::get('/logout', 'Api\AuthController@logout')->name('logout');
-        Route::get('/auth/user', 'Api\AuthController@user')->name('user');
-        Route::apiResources([
-            'user' => 'UserController'
-        ]);
-    });
-
+// App v1 API
+Route::group([
+    'middleware' => ['api.version:1'],
+    'namespace' => 'Api',
+    'prefix'     => 'v1',
+], function () {
+    require base_path('routes/app_api.v1.php');
 });

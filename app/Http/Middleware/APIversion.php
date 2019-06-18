@@ -3,9 +3,8 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Illuminate\Http\Request;
 
-class ForceJsonResponse
+class APIversion
 {
     /**
      * Handle an incoming request.
@@ -14,10 +13,10 @@ class ForceJsonResponse
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle(Request $request, Closure $next)
+    public function handle($request, Closure $next, $apiVersion = null)
     {
-        $request->headers->set('Accept', 'application/json');
-
+        $apiVersion = $apiVersion ?: config(['app.api_latest']);
+        config(['app.api_version' => $apiVersion]);
         return $next($request);
     }
 }

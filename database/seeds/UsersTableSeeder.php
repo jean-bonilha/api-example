@@ -13,14 +13,30 @@ class UsersTableSeeder extends Seeder
     {
         // How to many users you need, defaulting to 10
 
-        $count = (int) $this->command->ask('How to users do you need ?', 10);
+        $count = (int)$this->command->ask('How to users do you need ?', 10);
 
         $this->command->info("Creating {$count} users.");
 
         // Create the users
 
-        factory(App\User::class, $count)->create();
+        for ($i=1; $i <= $count; $i++) {
+            factory(App\User::class, 1)->create()->each(function ($user) {
+                $this->call(CompaniesTableSeeder::class);
+                $this->call(PeopleTableSeeder::class);
+            });
+        }
+
 
         $this->command->info('Users created!');
+
+        $rootUser = App\User::find(1);
+
+        $rootUser->update([
+            'name' => 'Jean Bonilha',
+            'email' => 'jeanbonilha.webdev@gmail.com',
+            'password' => bcrypt('13690002'),
+        ]);
+
+        $this->command->info('Root user created!');
     }
 }

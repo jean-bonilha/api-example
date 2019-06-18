@@ -6,7 +6,7 @@ use Hash;
 use App\User;
 use App\Http\Controllers\Firebase\FirebaseAuthController;
 use Illuminate\Http\Request;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\Api\UserController;
 
 class AuthController extends UserController
 {
