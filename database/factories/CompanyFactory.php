@@ -4,6 +4,7 @@
 
 use App\Model\Company;
 use Faker\Generator as Faker;
+use Illuminate\Support\Facades\DB;
 
 $factory->define(Company::class, function (Faker $faker) {
     $cnpj = '';
@@ -18,6 +19,7 @@ $factory->define(Company::class, function (Faker $faker) {
         'grau_risco' => $faker->randomNumber(2),
         'grupo_risco' => $faker->randomNumber(5),
         'municipio' => $faker->city,
-        'uf' => $faker->stateAbbr
+        'uf' => $faker->stateAbbr,
+        'saved_user' => DB::table('users')->orderBy('id', 'desc')->first()->id,
     ];
 });
