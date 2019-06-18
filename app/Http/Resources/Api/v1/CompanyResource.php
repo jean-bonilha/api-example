@@ -22,7 +22,6 @@ class CompanyResource extends JsonResource
             'codigo_descricao' => $this->codigo_descricao,
             'grau_risco' => $this->grau_risco,
             'grupo_risco' => $this->grupo_risco,
-            'municipio' => $this->municipio,
             'uf' => $this->uf,
         ];
     }
