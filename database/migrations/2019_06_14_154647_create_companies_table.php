@@ -18,9 +18,9 @@ class CreateCompaniesTable extends Migration
             $table->string('razao_social');
             $table->string('nome_fantasia');
             $table->string('cnpj', 18);
-            $table->text('codigo_descricao');
-            $table->string('grau_risco', 2);
-            $table->string('grupo_risco', 5);
+            $table->text('codigo_descricao')->nullable();
+            $table->string('grau_risco', 2)->nullable();
+            $table->string('grupo_risco', 5)->nullable();
             $table->string('municipio');
             $table->string('uf', 2);
             $table->timestamps();
