@@ -11,5 +11,6 @@ Route::middleware('auth:api')->group(function () {
     Route::apiResources([
         'user' => 'UserController',
         'company' => 'CompanyController',
+        'person' => 'PersonController',
     ]);
 });
