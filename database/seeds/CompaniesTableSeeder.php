@@ -17,7 +17,7 @@ class CompaniesTableSeeder extends Seeder
 
         // Create the companies
 
-        factory(App\Model\Company::class, 5)->create();
+        factory(App\Models\Company::class, 5)->create();
 
         $this->command->info('Companies created!');
     }

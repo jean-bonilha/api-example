@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Model;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Person extends Model
+class Company extends Model
 {
     /**
      * The attributes that aren't mass assignable.

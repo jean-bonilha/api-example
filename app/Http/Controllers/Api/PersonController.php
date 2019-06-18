@@ -8,6 +8,6 @@ class PersonController extends Controller
 {
     public function __construct()
     {
-        parent::__construct('Model\\Person', 'PersonResource', 'PersonCollection', 10);
+        parent::__construct('Models\\Person', 'PersonResource', 'PersonCollection', 10);
     }
 }
