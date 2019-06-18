@@ -18,7 +18,6 @@ $factory->define(Company::class, function (Faker $faker) {
         'codigo_descricao' => $faker->text,
         'grau_risco' => $faker->randomNumber(2),
         'grupo_risco' => $faker->randomNumber(5),
-        'uf' => $faker->stateAbbr,
         'saved_user' => DB::table('users')->orderBy('id', 'desc')->first()->id,
     ];
 });
