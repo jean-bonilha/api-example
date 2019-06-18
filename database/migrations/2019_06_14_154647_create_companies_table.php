@@ -23,6 +23,8 @@ class CreateCompaniesTable extends Migration
             $table->string('grupo_risco', 5)->nullable();
             $table->string('municipio');
             $table->string('uf', 2);
+            $table->bigInteger('saved_user')->unsigned();
+            $table->foreign('saved_user')->references('id')->on('users');
             $table->timestamps();
         });
     }
