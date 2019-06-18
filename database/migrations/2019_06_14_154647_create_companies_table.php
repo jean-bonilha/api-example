@@ -17,7 +17,7 @@ class CreateCompaniesTable extends Migration
             $table->bigIncrements('id');
             $table->string('razao_social');
             $table->string('nome_fantasia');
-            $table->string('cnpj', 18);
+            $table->string('cnpj', 18)->unique();
             $table->text('codigo_descricao')->nullable();
             $table->string('grau_risco', 2)->nullable();
             $table->string('grupo_risco', 5)->nullable();
