@@ -20,7 +20,16 @@ trait ResourcesController
         $this->model = $model;
         $this->jsonResource = $jsonResource;
         $this->resourceCollection = $resourceCollection;
+    }
+
+    public function setPaginate($paginate)
+    {
         $this->paginate = $paginate;
+    }
+
+    public function getPaginate()
+    {
+        return $this->paginate;
     }
 
     protected function setResources()

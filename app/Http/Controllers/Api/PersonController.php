@@ -8,6 +8,7 @@ class PersonController extends Controller
 {
     public function __construct()
     {
-        parent::__construct('Person', 'PersonResource', 'PersonCollection', 10);
+        parent::__construct('Person', 'PersonResource', 'PersonCollection');
+        parent::setPaginate(10);
     }
 }
