@@ -25,12 +25,12 @@ trait ResourcesController
 
     protected function setResources()
     {
-        $this->setModel();
+        $this->setModels();
         $this->defineJsonResource();
         $this->defineResourceCollection();
     }
 
-    protected function setModel()
+    protected function setModels()
     {
         $model = $this->model;
         $this->Model = "App\\Models\\$model";
