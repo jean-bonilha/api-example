@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
+use Validator;
 use Illuminate\Http\Request;
 use App\Traits\ResourcesController;
 
@@ -41,10 +43,19 @@ abstract class BaseController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = $this->validator($request->all());
+
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => $validator->errors()
+            ], 422);
+        }
+
         $this->setResources();
+        $dataStore = $this->setSavedUser($request->all());
         try {
             return response()->json([
-                'message' => $this->Model::create($request->all())
+                'message' => $this->Model::create($dataStore)
             ], 201);
         } catch (\Throwable $th) {
             return response()->json([
@@ -76,11 +87,20 @@ abstract class BaseController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->setResources();
-        try {
-            $itemUpdate = $this->Model::find($id);
+        $validator = $this->validator($request->all());
+
+        if ($validator->fails()) {
             return response()->json([
-                'message' => $itemUpdate->update($request->all())
+                'message' => $validator->errors()
+            ], 422);
+        }
+
+        $this->setResources();
+        $dataUpdate = $this->setSavedUser($request->all());
+        try {
+            $itemUpdate = $this->Model::find($id)->makeLog();
+            return response()->json([
+                'message' => $itemUpdate->update($dataUpdate)
             ], 200);
         } catch (\Throwable $th) {
             return response()->json([
@@ -100,12 +120,32 @@ abstract class BaseController extends Controller
         $this->setResources();
         try {
             return response()->json([
-                'message' => $this->Model::find($id)->delete()
+                'message' => $this->Model::find($id)->makeLog()->delete()
             ], 200);
         } catch (\Throwable $th) {
             return response()->json([
                 'message' => $th->getMessage()
             ], 422);
         }
+    }
+
+    /**
+     * Make validation in array $requestAll.
+     *
+     * @param  array  $requestAll
+     * @return \Illuminate\Support\Facades\Validator
+     */
+    protected function validator($requestAll)
+    {
+        $validateFields = $this->getValidateFields();
+        return Validator::make($requestAll, $validateFields);
+    }
+
+    protected function setSavedUser($data)
+    {
+        if (Auth::check()) {
+            $data['saved_user'] = Auth::id();
+        }
+        return $data;
     }
 }

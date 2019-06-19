@@ -17,7 +17,7 @@ class CreatePeopleTable extends Migration
             $table->bigIncrements('id');
             $table->string('nome');
             $table->string('rg');
-            $table->string('data_nascimento');
+            $table->date('data_nascimento');
             $table->enum('sexo', ['M', 'F', 'T', 'O']);
             $table->string('rg_orgao_uf_emissao')->nullable();
             $table->string('rg_data_expedicao')->nullable();

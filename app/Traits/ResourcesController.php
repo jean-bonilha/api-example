@@ -11,29 +11,49 @@ trait ResourcesController
     private $paginate;
     private $scope = 'Api';
 
+    private $validateFields = [];
+
     public function __construct(
         string $model,
         string $jsonResource,
-        string $resourceCollection,
-        int $paginate = null
+        string $resourceCollection
     ) {
         $this->model = $model;
         $this->jsonResource = $jsonResource;
         $this->resourceCollection = $resourceCollection;
+    }
+
+    public function setPaginate($paginate)
+    {
         $this->paginate = $paginate;
+    }
+
+    public function getPaginate()
+    {
+        return $this->paginate;
+    }
+
+    public function setValidateFields($validateFields)
+    {
+        $this->validateFields = $validateFields;
+    }
+
+    public function getValidateFields()
+    {
+        return $this->validateFields;
     }
 
     protected function setResources()
     {
-        $this->setModel();
+        $this->setModels();
         $this->defineJsonResource();
         $this->defineResourceCollection();
     }
 
-    protected function setModel()
+    protected function setModels()
     {
         $model = $this->model;
-        $this->Model = "App\\$model";
+        $this->Model = "App\\Models\\$model";
     }
 
     protected function defineJsonResource()

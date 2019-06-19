@@ -17,7 +17,7 @@ class PeopleTableSeeder extends Seeder
 
         // Create the people
 
-        factory(App\Model\Person::class, 50)->create();
+        factory(App\Models\Person::class, 50)->create();
 
         $this->command->info('People created!');
     }

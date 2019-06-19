@@ -2,7 +2,7 @@
 
 /* @var $factory \Illuminate\Database\Eloquent\Factory */
 
-use App\Model\Company;
+use App\Models\Company;
 use Faker\Generator as Faker;
 use Illuminate\Support\Facades\DB;
 
@@ -18,8 +18,6 @@ $factory->define(Company::class, function (Faker $faker) {
         'codigo_descricao' => $faker->text,
         'grau_risco' => $faker->randomNumber(2),
         'grupo_risco' => $faker->randomNumber(5),
-        'municipio' => $faker->city,
-        'uf' => $faker->stateAbbr,
         'saved_user' => DB::table('users')->orderBy('id', 'desc')->first()->id,
     ];
 });

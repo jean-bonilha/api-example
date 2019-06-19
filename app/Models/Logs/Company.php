@@ -1,11 +1,14 @@
 <?php
 
-namespace App\Model;
+namespace App\Models\Logs;
 
-use Illuminate\Database\Eloquent\Model;
+use Jenssegers\Mongodb\Eloquent\Model;
 
 class Company extends Model
 {
+    protected $connection = 'mongodb';
+    protected $collection = 'companies';
+
     /**
      * The attributes that aren't mass assignable.
      *
