@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Validator;
 use Illuminate\Http\Request;
 use App\Traits\ResourcesController;
 
@@ -41,6 +42,15 @@ abstract class BaseController extends Controller
      */
     public function store(Request $request)
     {
+        $validateFields = $this->getValidateFields();
+        $validator = Validator::make($request->all(), $validateFields);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => $validator->errors()
+            ], 422);
+        }
+
         $this->setResources();
         try {
             return response()->json([
@@ -76,6 +86,15 @@ abstract class BaseController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $validateFields = $this->getValidateFields();
+        $validator = Validator::make($request->all(), $validateFields);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => $validator->errors()
+            ], 422);
+        }
+
         $this->setResources();
         try {
             $itemUpdate = $this->Model::find($id);
