@@ -42,8 +42,7 @@ abstract class BaseController extends Controller
      */
     public function store(Request $request)
     {
-        $validateFields = $this->getValidateFields();
-        $validator = Validator::make($request->all(), $validateFields);
+        $validator = $this->validator($request->all());
 
         if ($validator->fails()) {
             return response()->json([
@@ -86,8 +85,7 @@ abstract class BaseController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $validateFields = $this->getValidateFields();
-        $validator = Validator::make($request->all(), $validateFields);
+        $validator = $this->validator($request->all());
 
         if ($validator->fails()) {
             return response()->json([
@@ -126,5 +124,17 @@ abstract class BaseController extends Controller
                 'message' => $th->getMessage()
             ], 422);
         }
+    }
+
+    /**
+     * Make validation in array $requestAll.
+     *
+     * @param  array  $requestAll
+     * @return \Illuminate\Support\Facades\Validator
+     */
+    protected function validator($requestAll)
+    {
+        $validateFields = $this->getValidateFields();
+        return Validator::make($requestAll, $validateFields);
     }
 }
