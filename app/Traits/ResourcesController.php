@@ -16,8 +16,7 @@ trait ResourcesController
     public function __construct(
         string $model,
         string $jsonResource,
-        string $resourceCollection,
-        int $paginate = null
+        string $resourceCollection
     ) {
         $this->model = $model;
         $this->jsonResource = $jsonResource;
