@@ -11,6 +11,8 @@ trait ResourcesController
     private $paginate;
     private $scope = 'Api';
 
+    private $validateFields = [];
+
     public function __construct(
         string $model,
         string $jsonResource,
@@ -30,6 +32,16 @@ trait ResourcesController
     public function getPaginate()
     {
         return $this->paginate;
+    }
+
+    public function setValidateFields($validateFields)
+    {
+        $this->validateFields = $validateFields;
+    }
+
+    public function getValidateFields()
+    {
+        return $this->validateFields;
     }
 
     protected function setResources()

@@ -10,5 +10,10 @@ class CompanyController extends Controller
     {
         parent::__construct('Company', 'CompanyResource', 'CompanyCollection');
         parent::setPaginate(10);
+        parent::setValidateFields([
+            'razao_social' => 'required|string|min:3|max:255',
+            'nome_fantasia' => 'required|string|min:3|max:255',
+            'cnpj' => 'required|string|min:18|max:18|unique:companies',
+        ]);
     }
 }
