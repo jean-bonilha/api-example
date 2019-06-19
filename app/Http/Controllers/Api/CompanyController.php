@@ -8,6 +8,6 @@ class CompanyController extends Controller
 {
     public function __construct()
     {
-        parent::__construct('Models\\Company', 'CompanyResource', 'CompanyCollection', 10);
+        parent::__construct('Company', 'CompanyResource', 'CompanyCollection', 10);
     }
 }

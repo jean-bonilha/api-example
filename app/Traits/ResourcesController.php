@@ -33,7 +33,7 @@ trait ResourcesController
     protected function setModel()
     {
         $model = $this->model;
-        $this->Model = "App\\$model";
+        $this->Model = "App\\Models\\$model";
     }
 
     protected function defineJsonResource()
