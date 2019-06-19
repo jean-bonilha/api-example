@@ -2,9 +2,7 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-
-class Company extends Model
+class Company extends BaseModel
 {
     /**
      * The attributes that aren't mass assignable.
