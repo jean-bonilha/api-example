@@ -43,7 +43,7 @@ abstract class BaseController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = $this->validator($request->all());
+        $validator = $this->validator($request->all(), true);
 
         if ($validator->fails()) {
             return response()->json([
