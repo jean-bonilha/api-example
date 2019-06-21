@@ -52,7 +52,7 @@ abstract class BaseController extends Controller
         }
 
         $this->setResources();
-        $dataStore = $this->setSavedUser($request->all());
+        $dataStore = $this->setUserSave($request->all());
         try {
             return response()->json([
                 'message' => $this->Model::create($dataStore)
@@ -96,7 +96,7 @@ abstract class BaseController extends Controller
         }
 
         $this->setResources();
-        $dataUpdate = $this->setSavedUser($request->all());
+        $dataUpdate = $this->setUserSave($request->all());
         try {
             $itemUpdate = $this->Model::find($id)->makeLog();
             return response()->json([
@@ -141,7 +141,7 @@ abstract class BaseController extends Controller
         return Validator::make($requestAll, $validateFields);
     }
 
-    protected function setSavedUser($data)
+    protected function setUserSave($data)
     {
         if (Auth::check()) {
             $data['saved_user'] = Auth::id();
