@@ -43,7 +43,7 @@ abstract class BaseController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = $this->validator($request->all(), true);
+        $validator = $this->validator($request->all());
 
         if ($validator->fails()) {
             return response()->json([
@@ -87,7 +87,7 @@ abstract class BaseController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $validator = $this->validator($request->all());
+        $validator = $this->validator($request->all(), true);
 
         if ($validator->fails()) {
             return response()->json([
@@ -133,16 +133,17 @@ abstract class BaseController extends Controller
      * Make validation in array $requestAll.
      *
      * @param  array  $requestAll
+     * @param  boolean  $update optional
      * @return \Illuminate\Support\Facades\Validator
      */
-    protected function validator($requestAll, $insert = false)
+    protected function validator($requestAll, $update = false)
     {
         $validateFields = $this->getValidateFields();
-        $addRequired = function ($v) {
-            return "required|$v";
+        $removeRequired = function ($validations) {
+            return str_replace('required|', '', $validations);
         };
-        if ($insert) {
-            $validateFields = array_map($addRequired, $validateFields);
+        if ($update) {
+            $validateFields = array_map($removeRequired, $validateFields);
         }
         return Validator::make($requestAll, $validateFields);
     }

@@ -11,9 +11,13 @@ class CompanyController extends Controller
         parent::__construct('Company', 'CompanyResource', 'CompanyCollection');
         parent::setPaginate(10);
         parent::setValidateFields([
-            'razao_social' => 'string|min:3|max:255',
-            'nome_fantasia' => 'string|min:3|max:255',
-            'cnpj' => 'string|min:18|max:18',
+            'razao_social' => 'required|string|min:3|max:255',
+            'nome_fantasia' => 'required|string|min:3|max:255',
+            'cnpj' => 'required|string|min:18|max:18',
+            'codigo_descricao' => 'string|min:3',
+            'grau_risco' => 'string|min:2|max:2',
+            'grupo_risco' => 'string|min:5|max:5',
+            'saved_user' => 'integer',
         ]);
     }
 }
