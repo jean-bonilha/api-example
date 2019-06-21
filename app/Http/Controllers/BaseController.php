@@ -120,7 +120,7 @@ abstract class BaseController extends Controller
         $this->setResources();
         try {
             return response()->json([
-                'message' => $this->Model::find($id)->makeLog('delete')->delete()
+                'message' => $this->Model::find($id)->makeLog('deleted')->delete()
             ], 200);
         } catch (\Throwable $th) {
             return response()->json([

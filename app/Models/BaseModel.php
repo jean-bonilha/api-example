@@ -12,7 +12,7 @@ abstract class BaseModel extends Model
      * @param  string  $action (update|delete)
      * @return $this
      */
-    public function makeLog($action = 'update')
+    public function makeLog($action = 'updated')
     {
         $dataLog = $this->toArray();
         $dataLog['action'] = $action;
