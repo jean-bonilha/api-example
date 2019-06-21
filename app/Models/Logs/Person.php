@@ -2,7 +2,7 @@
 
 namespace App\Models\Logs;
 
-use Illuminate\Database\Eloquent\Model;
+use Jenssegers\Mongodb\Eloquent\Model;
 
 class Person extends Model
 {
