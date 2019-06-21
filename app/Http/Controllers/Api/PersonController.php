@@ -12,10 +12,10 @@ class PersonController extends Controller
         parent::__construct('Person', 'PersonResource', 'PersonCollection');
         parent::setPaginate(10);
         parent::setValidateFields([
-            'nome' => 'required|string|min:3|max:255',
-            'rg' => 'required|string|min:3|max:255',
-            'data_nascimento' => 'required|date',
-            'sexo' => 'required', Rule::in(['M', 'F', 'T', 'O']),
+            'nome' => 'string|min:3|max:255',
+            'rg' => 'string|min:3|max:255',
+            'data_nascimento' => 'date',
+            'sexo' => Rule::in(['M', 'F', 'T', 'O']),
         ]);
     }
 }
