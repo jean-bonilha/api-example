@@ -135,9 +135,15 @@ abstract class BaseController extends Controller
      * @param  array  $requestAll
      * @return \Illuminate\Support\Facades\Validator
      */
-    protected function validator($requestAll)
+    protected function validator($requestAll, $insert = false)
     {
         $validateFields = $this->getValidateFields();
+        $addRequired = function ($v) {
+            return "required|$v";
+        };
+        if ($insert) {
+            $validateFields = array_map($addRequired, $validateFields);
+        }
         return Validator::make($requestAll, $validateFields);
     }
 
