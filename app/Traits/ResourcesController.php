@@ -3,6 +3,7 @@
 namespace App\Traits;
 
 use Auth;
+use Validator;
 
 trait ResourcesController
 {
@@ -73,6 +74,25 @@ trait ResourcesController
         $scope = $this->scope;
         $v = config('app.api_version');
         $this->{$property} = "App\\Http\\Resources\\$scope\\v$v\\$resource";
+    }
+
+    /**
+     * Make validation in array $requestAll.
+     *
+     * @param  array  $requestAll
+     * @param  boolean  $update optional
+     * @return \Illuminate\Support\Facades\Validator
+     */
+    protected function validator($requestAll, $update = false)
+    {
+        $validateFields = $this->getValidateFields();
+        $removeRequired = function ($validations) {
+            return str_replace('required|', '', $validations);
+        };
+        if ($update) {
+            $validateFields = array_map($removeRequired, $validateFields);
+        }
+        return Validator::make($requestAll, $validateFields);
     }
 
     /**

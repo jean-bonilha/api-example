@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Validator;
 use Illuminate\Http\Request;
 use App\Traits\ResourcesController;
 
@@ -147,24 +146,5 @@ abstract class BaseController extends Controller
         return response()->json([
             'message' => 'Resource not found.'
         ], 404);
-    }
-
-    /**
-     * Make validation in array $requestAll.
-     *
-     * @param  array  $requestAll
-     * @param  boolean  $update optional
-     * @return \Illuminate\Support\Facades\Validator
-     */
-    protected function validator($requestAll, $update = false)
-    {
-        $validateFields = $this->getValidateFields();
-        $removeRequired = function ($validations) {
-            return str_replace('required|', '', $validations);
-        };
-        if ($update) {
-            $validateFields = array_map($removeRequired, $validateFields);
-        }
-        return Validator::make($requestAll, $validateFields);
     }
 }
