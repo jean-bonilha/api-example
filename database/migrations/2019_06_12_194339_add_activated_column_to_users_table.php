@@ -14,7 +14,9 @@ class AddActivatedColumnToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->boolean('activated')->default('0');
+            $table->boolean('activated')
+                ->after('remember_token')
+                ->default('0');
         });
     }
 

@@ -14,7 +14,10 @@ class AddSavedUserColumnToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->bigInteger('saved_user')->unsigned()->nullable();
+            $table->bigInteger('saved_user')
+                ->after('remember_token')
+                ->unsigned()
+                ->nullable();
             $table->foreign('saved_user')->references('id')->on('users');
         });
     }
