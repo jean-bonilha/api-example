@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Auth;
-use Validator;
 use Illuminate\Http\Request;
 use App\Traits\ResourcesController;
 
@@ -73,9 +71,15 @@ abstract class BaseController extends Controller
     public function show($id)
     {
         $this->setResources();
-        return new $this->JsonResource(
-            $this->Model::find($id)
-        );
+        $resource = $this->Model::find($id);
+        if ($resource) {
+            return new $this->JsonResource(
+                $this->Model::find($id)
+            );
+        }
+        return response()->json([
+            'message' => 'Resource not found.'
+        ], 404);
     }
 
     /**
@@ -87,7 +91,7 @@ abstract class BaseController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $validator = $this->validator($request->all());
+        $validator = $this->validator($request->all(), true);
 
         if ($validator->fails()) {
             return response()->json([
@@ -96,17 +100,26 @@ abstract class BaseController extends Controller
         }
 
         $this->setResources();
+
         $dataUpdate = $this->setUserSave($request->all());
-        try {
-            $itemUpdate = $this->Model::find($id)->makeLog();
-            return response()->json([
-                'message' => $itemUpdate->update($dataUpdate)
-            ], 200);
-        } catch (\Throwable $th) {
-            return response()->json([
-                'message' => $th->getMessage()
-            ], 422);
+        $itemUpdate = $this->Model::find($id);
+
+        if ($itemUpdate) {
+            try {
+                $itemUpdate = $this->Model::find($id)->makeLog();
+                return response()->json([
+                    'message' => $itemUpdate->update($dataUpdate)
+                ], 200);
+            } catch (\Throwable $th) {
+                return response()->json([
+                    'message' => $th->getMessage()
+                ], 422);
+            }
         }
+
+        return response()->json([
+            'message' => 'Resource not found.'
+        ], 404);
     }
 
     /**
@@ -118,34 +131,20 @@ abstract class BaseController extends Controller
     public function destroy($id)
     {
         $this->setResources();
-        try {
-            return response()->json([
-                'message' => $this->Model::find($id)->makeLog('deleted')->delete()
-            ], 200);
-        } catch (\Throwable $th) {
-            return response()->json([
-                'message' => $th->getMessage()
-            ], 422);
+        $itemDelete = $this->Model::find($id);
+        if ($itemDelete) {
+            try {
+                return response()->json([
+                    'message' => $itemDelete->makeLog('deleted')->delete()
+                ], 200);
+            } catch (\Throwable $th) {
+                return response()->json([
+                    'message' => $th->getMessage()
+                ], 422);
+            }
         }
-    }
-
-    /**
-     * Make validation in array $requestAll.
-     *
-     * @param  array  $requestAll
-     * @return \Illuminate\Support\Facades\Validator
-     */
-    protected function validator($requestAll)
-    {
-        $validateFields = $this->getValidateFields();
-        return Validator::make($requestAll, $validateFields);
-    }
-
-    protected function setUserSave($data)
-    {
-        if (Auth::check()) {
-            $data['saved_user'] = Auth::id();
-        }
-        return $data;
+        return response()->json([
+            'message' => 'Resource not found.'
+        ], 404);
     }
 }

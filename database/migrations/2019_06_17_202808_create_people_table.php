@@ -21,7 +21,7 @@ class CreatePeopleTable extends Migration
             $table->enum('sexo', ['M', 'F', 'T', 'O']);
             $table->string('rg_orgao_uf_emissao')->nullable();
             $table->string('rg_data_expedicao')->nullable();
-            $table->string('cpf')->nullable();
+            $table->string('cpf', 11)->nullable();
             $table->string('cnh')->nullable();
             $table->string('cnh_categoria')->nullable();
             $table->string('nis')->nullable();
@@ -29,14 +29,14 @@ class CreatePeopleTable extends Migration
             $table->string('estado_civil')->nullable();
             $table->string('grau_instrucao')->nullable();
             $table->string('nome_social')->nullable();
-            $table->string('condigo_minicipio')->nullable();
-            $table->string('sigla_uf')->nullable();
+            $table->string('minicipio')->nullable();
+            $table->string('uf', 2)->nullable();
             $table->string('codigo_pais_nascimento')->nullable();
             $table->string('nome_mae')->nullable();
             $table->string('nome_pai')->nullable();
             $table->string('ctps_numero')->nullable();
             $table->string('ctps_serie')->nullable();
-            $table->bigInteger('saved_user')->unsigned();
+            $table->bigInteger('saved_user')->unsigned()->nullable();
             $table->foreign('saved_user')->references('id')->on('users');
             $table->timestamps();
         });

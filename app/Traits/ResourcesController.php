@@ -2,6 +2,9 @@
 
 namespace App\Traits;
 
+use Auth;
+use Validator;
+
 trait ResourcesController
 {
     private $model;
@@ -13,14 +16,10 @@ trait ResourcesController
 
     private $validateFields = [];
 
-    public function __construct(
-        string $model,
-        string $jsonResource,
-        string $resourceCollection
-    ) {
+    public function __construct(string $model) {
         $this->model = $model;
-        $this->jsonResource = $jsonResource;
-        $this->resourceCollection = $resourceCollection;
+        $this->jsonResource = $model . 'Resource';
+        $this->resourceCollection = $model . 'Collection';
     }
 
     public function setPaginate($paginate)
@@ -71,5 +70,38 @@ trait ResourcesController
         $scope = $this->scope;
         $v = config('app.api_version');
         $this->{$property} = "App\\Http\\Resources\\$scope\\v$v\\$resource";
+    }
+
+    /**
+     * Make validation in array $requestAll.
+     *
+     * @param  array  $requestAll
+     * @param  boolean  $update optional
+     * @return \Illuminate\Support\Facades\Validator
+     */
+    protected function validator($requestAll, $update = false)
+    {
+        $validateFields = $this->getValidateFields();
+        $removeRequired = function ($validations) {
+            return str_replace('required|', '', $validations);
+        };
+        if ($update) {
+            $validateFields = array_map($removeRequired, $validateFields);
+        }
+        return Validator::make($requestAll, $validateFields);
+    }
+
+    /**
+     * Sets saved_user field on $data array with current user.
+     *
+     * @param  array  $data optional
+     * @return array  $data modified
+     */
+    protected function setUserSave($data)
+    {
+        if (Auth::check()) {
+            $data['saved_user'] = Auth::id();
+        }
+        return $data;
     }
 }

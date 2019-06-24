@@ -21,7 +21,7 @@ class CreateCompaniesTable extends Migration
             $table->text('codigo_descricao')->nullable();
             $table->string('grau_risco', 2)->nullable();
             $table->string('grupo_risco', 5)->nullable();
-            $table->bigInteger('saved_user')->unsigned();
+            $table->bigInteger('saved_user')->unsigned()->nullable();
             $table->foreign('saved_user')->references('id')->on('users');
             $table->timestamps();
         });
