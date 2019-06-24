@@ -16,14 +16,10 @@ trait ResourcesController
 
     private $validateFields = [];
 
-    public function __construct(
-        string $model,
-        string $jsonResource,
-        string $resourceCollection
-    ) {
+    public function __construct(string $model) {
         $this->model = $model;
-        $this->jsonResource = $jsonResource;
-        $this->resourceCollection = $resourceCollection;
+        $this->jsonResource = $model . 'Resource';
+        $this->resourceCollection = $model . 'Collection';
     }
 
     public function setPaginate($paginate)
