@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Auth;
 use Validator;
 use Illuminate\Http\Request;
 use App\Traits\ResourcesController;
@@ -167,19 +166,5 @@ abstract class BaseController extends Controller
             $validateFields = array_map($removeRequired, $validateFields);
         }
         return Validator::make($requestAll, $validateFields);
-    }
-
-    /**
-     * Sets saved_user field on $data array with current user.
-     *
-     * @param  array  $data optional
-     * @return array  $data modified
-     */
-    protected function setUserSave($data)
-    {
-        if (Auth::check()) {
-            $data['saved_user'] = Auth::id();
-        }
-        return $data;
     }
 }

@@ -2,6 +2,8 @@
 
 namespace App\Traits;
 
+use Auth;
+
 trait ResourcesController
 {
     private $model;
@@ -71,5 +73,19 @@ trait ResourcesController
         $scope = $this->scope;
         $v = config('app.api_version');
         $this->{$property} = "App\\Http\\Resources\\$scope\\v$v\\$resource";
+    }
+
+    /**
+     * Sets saved_user field on $data array with current user.
+     *
+     * @param  array  $data optional
+     * @return array  $data modified
+     */
+    protected function setUserSave($data)
+    {
+        if (Auth::check()) {
+            $data['saved_user'] = Auth::id();
+        }
+        return $data;
     }
 }
