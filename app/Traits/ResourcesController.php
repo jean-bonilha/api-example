@@ -52,7 +52,9 @@ trait ResourcesController
     protected function createModels()
     {
         $model = $this->model;
-        $this->Model = "App\\Models\\$model";
+        $modelPath = "App\\Models\\$model";
+        $classExists = class_exists($modelPath);
+        $this->Model = $classExists ? $modelPath : "App\\$model";
     }
 
     protected function createJsonResource()
