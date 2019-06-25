@@ -51,6 +51,7 @@ abstract class BaseController extends Controller
 
         $this->setResources();
         $dataStore = $this->setUserSave($request->all());
+
         try {
             return response()->json([
                 'message' => $this->Model::create($dataStore)
@@ -131,7 +132,9 @@ abstract class BaseController extends Controller
     public function destroy($id)
     {
         $this->setResources();
+
         $itemDelete = $this->Model::find($id);
+
         if ($itemDelete) {
             try {
                 return response()->json([
@@ -143,6 +146,7 @@ abstract class BaseController extends Controller
                 ], 422);
             }
         }
+
         return response()->json([
             'message' => 'Resource not found.'
         ], 404);
