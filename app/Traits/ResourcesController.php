@@ -52,10 +52,12 @@ trait ResourcesController
 
     protected function createModels()
     {
-        $model = $this->model;
-        $modelPath = "App\\Models\\$model";
-        $classExists = class_exists($modelPath);
-        $this->Model = $classExists ? $modelPath : "App\\$model";
+        if (!isset($this->Model)) {
+            $model = $this->model;
+            $modelPath = "App\\Models\\$model";
+            $classExists = class_exists($modelPath);
+            $this->Model = $classExists ? $modelPath : "App\\$model";
+        }
     }
 
     protected function createJsonResource()
@@ -70,9 +72,11 @@ trait ResourcesController
 
     protected function createResource($resource, $property)
     {
-        $scope = $this->scope;
-        $v = config('app.api_version');
-        $this->{$property} = "App\\Http\\Resources\\$scope\\v$v\\$resource";
+        if (!isset($this->{$property})) {
+            $scope = $this->scope;
+            $v = config('app.api_version');
+            $this->{$property} = "App\\Http\\Resources\\$scope\\v$v\\$resource";
+        }
     }
 
     /**
