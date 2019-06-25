@@ -47,6 +47,7 @@ trait ResourcesController
         $this->createModels();
         $this->createJsonResource();
         $this->createResourceCollection();
+        return $this;
     }
 
     protected function createModels()
