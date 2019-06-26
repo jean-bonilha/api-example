@@ -31,9 +31,11 @@ abstract class BaseModel extends Model
             ->orderBy('created_at', 'desc')
             ->first();
 
-        return DB::connection('mongodb')
+        DB::connection('mongodb')
             ->collection($table)
             ->where('_id', $itemDelete['_id'])
             ->delete();
+
+        return $this;
     }
 }
