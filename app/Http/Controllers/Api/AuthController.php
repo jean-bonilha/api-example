@@ -14,7 +14,7 @@ class AuthController extends UserController
     {
         $storeResponse = $this->store($request);
 
-        if (gettype($storeResponse) === 'array') {
+        if (class_basename($storeResponse) === 'MessageBag') {
             $response = ['errors' => $storeResponse];
             return response($response, 422);
         }
