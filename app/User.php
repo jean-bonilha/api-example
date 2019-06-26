@@ -2,14 +2,15 @@
 
 namespace App;
 
+use App\Models\Auth\User as Authenticatable;
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
-use App\Models\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\SoftDeletes;
+// use Illuminate\Contracts\Auth\MustVerifyEmail;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, Notifiable;
+    use HasApiTokens, Notifiable, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
