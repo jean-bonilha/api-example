@@ -98,7 +98,7 @@ abstract class BaseController extends Controller
             try {
                 $this->Model::find($id)->makeLog()->update($dataUpdate);
                 return response()->json([
-                    'message' => 'User successfully updated!'
+                    'message' => 'Data successfully updated!'
                 ], 200);
             } catch (\Throwable $th) {
                 return response()->json([
@@ -135,7 +135,7 @@ abstract class BaseController extends Controller
             }
 
             return response()->json([
-                'message' => 'User deleted successfully!'
+                'message' => 'Data deleted successfully!'
             ], 200);
         }
 
