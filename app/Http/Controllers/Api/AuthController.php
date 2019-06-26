@@ -18,7 +18,7 @@ class AuthController extends UserController
             return $storeResponse;
         }
 
-        return $this->created('User created successfully!');
+        return $this->created(trans('auth.created'));
     }
 
     public function login(Request $request)
@@ -27,7 +27,7 @@ class AuthController extends UserController
 
         if ($user) {
             if (!boolval($user->activated)) {
-                return $this->unprocessable('User is not activated.');
+                return $this->unprocessable(trans('auth.no-activated'));
             }
             if (Hash::check($request->password, $user->password)) {
                 $token = $user->createToken('Laravel Password Grant Client')->accessToken;
@@ -35,15 +35,15 @@ class AuthController extends UserController
                 $properties['password'] = $request->password;
                 $firebaseUserSave = (new FirebaseAuthController)->store($properties);
                 if (!$firebaseUserSave) {
-                    return $this->unprocessable('Save user on Firebase service failed.');
+                    return $this->unprocessable(trans('auth.firebase-save-failed'));
                 }
                 $response = ['token' => $token];
                 return $this->created($response);
             } else {
-                return $this->unprocessable('Password missmatch.');
+                return $this->unprocessable(trans('auth.password-missmatch'));
             }
         } else {
-            return $this->unprocessable('User does not exist.');
+            return $this->unprocessable(trans('auth.user-not-found'));
         }
     }
 
@@ -54,12 +54,12 @@ class AuthController extends UserController
         $firebaseUserSave = (new FirebaseAuthController)->destroyByEmail($user->email);
 
         if (!$firebaseUserSave) {
-            return $this->unprocessable('User logout on Firebase service failed.');
+            return $this->unprocessable(trans('auth.firebase-login-failed'));
         }
 
         $token = $user->token();
         $token->revoke();
 
-        return $this->success('You have been succesfully logged out!');
+        return $this->success(trans('auth.login-success'));
     }
 }
