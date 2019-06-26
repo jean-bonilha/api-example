@@ -19,8 +19,7 @@ class AuthController extends UserController
             return response($response, 422);
         }
 
-        $token = $storeResponse->createToken('Laravel Password Grant Client')->accessToken;
-        $response = ['token' => $token];
+        $response = ['message' => 'User created successfully!'];
 
         return response($response, 201);
     }
