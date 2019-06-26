@@ -77,14 +77,10 @@ class UserController extends Controller
             try {
                 (new FirebaseAuthController)->destroyByEmail($user->email);
             } catch (\Throwable $th) {
-                return response()->json([
-                    'errors' => ['message' => $th->getMessage()]
-                ], 422);
+                return $this->unprocessable($th->getMessage());
             }
         } else {
-            return response()->json([
-                'errors' => ['message' => 'Resource not found.']
-            ], 404);
+            return $this->notFound();
         }
 
         return parent::destroy($id);

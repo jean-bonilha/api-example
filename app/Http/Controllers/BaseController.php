@@ -4,10 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Traits\ResourcesController;
+use App\Traits\ResponseController;
 
 abstract class BaseController extends Controller
 {
-    use ResourcesController;
+    use ResourcesController, ResponseController;
 
     /**
      * Display a listing of the resource.
@@ -44,7 +45,7 @@ abstract class BaseController extends Controller
         $validator = $this->validator($request->all());
 
         if ($validator->fails()) {
-            return $validator->errors();
+            return $this->unprocessable($validator->errors());
         }
 
         $dataStore = $this->setResources()->setUserSave($request->all());
@@ -67,9 +68,7 @@ abstract class BaseController extends Controller
                 $resource
             );
         }
-        return response()->json([
-            'errors' => ['message' => 'Resource not found.']
-        ], 404);
+        return $this->notFound();
     }
 
     /**
@@ -84,9 +83,7 @@ abstract class BaseController extends Controller
         $validator = $this->validator($request->all(), true);
 
         if ($validator->fails()) {
-            return response()->json([
-                'errors' => ['message' => $validator->errors()]
-            ], 422);
+            return $this->unprocessable($validator->errors());
         }
 
         $this->setResources();
@@ -97,19 +94,13 @@ abstract class BaseController extends Controller
         if ($itemUpdate) {
             try {
                 $this->Model::find($id)->makeLog()->update($dataUpdate);
-                return response()->json([
-                    'message' => 'Data successfully updated!'
-                ], 200);
+                return $this->success();
             } catch (\Throwable $th) {
-                return response()->json([
-                    'errors' => ['message' => $th->getMessage()]
-                ], 422);
+                return $this->unprocessable($th->getMessage());
             }
         }
 
-        return response()->json([
-            'errors' => ['message' => 'Resource not found.']
-        ], 404);
+        return $this->notFound();
     }
 
     /**
@@ -129,18 +120,12 @@ abstract class BaseController extends Controller
                 $itemDelete->makeLog('deleted')->delete();
             } catch (\Throwable $th) {
                 $itemDelete->removeLog();
-                return response()->json([
-                    'errors' => ['message' => 'Resource not deleted.']
-                ], 422);
+                return $this->unprocessable($th->getMessage());
             }
 
-            return response()->json([
-                'message' => 'Data deleted successfully!'
-            ], 200);
+            return $this->success();
         }
 
-        return response()->json([
-            'errors' => ['message' => 'Resource not found.']
-        ], 404);
+        return $this->notFound();
     }
 }
