@@ -14,14 +14,11 @@ class AuthController extends UserController
     {
         $storeResponse = $this->store($request);
 
-        if (class_basename($storeResponse) === 'MessageBag') {
-            $response = ['errors' => $storeResponse];
-            return response($response, 422);
+        if (class_basename($storeResponse) === 'JsonResponse') {
+            return $storeResponse;
         }
 
-        $response = ['message' => 'User created successfully!'];
-
-        return response($response, 201);
+        return $this->created('User created successfully!');
     }
 
     public function login(Request $request)
@@ -30,9 +27,7 @@ class AuthController extends UserController
 
         if ($user) {
             if (!boolval($user->activated)) {
-                return response()->json([
-                    'errors' => ['message' => 'User is not activated.']
-                ], 422);
+                return $this->unprocessable('User is not activated.');
             }
             if (Hash::check($request->password, $user->password)) {
                 $token = $user->createToken('Laravel Password Grant Client')->accessToken;
@@ -40,21 +35,15 @@ class AuthController extends UserController
                 $properties['password'] = $request->password;
                 $firebaseUserSave = (new FirebaseAuthController)->store($properties);
                 if (!$firebaseUserSave) {
-                    return response()->json([
-                        'errors' => ['message' => 'Save user on Firebase service failed.']
-                    ], 422);
+                    return $this->unprocessable('Save user on Firebase service failed.');
                 }
                 $response = ['token' => $token];
-                return response($response, 201);
+                return $this->created($response);
             } else {
-                return response()->json([
-                    'errors' => ['message' => 'Password missmatch.']
-                ], 422);
+                return $this->unprocessable('Password missmatch.');
             }
         } else {
-            return response()->json([
-                'errors' => ['message' => 'User does not exist.']
-            ], 422);
+            return $this->unprocessable('User does not exist.');
         }
     }
 
@@ -65,16 +54,12 @@ class AuthController extends UserController
         $firebaseUserSave = (new FirebaseAuthController)->destroyByEmail($user->email);
 
         if (!$firebaseUserSave) {
-            return response()->json([
-                'errors' => ['message' => 'User logout on Firebase service failed.']
-            ], 422);
+            return $this->unprocessable('User logout on Firebase service failed.');
         }
 
         $token = $user->token();
         $token->revoke();
 
-        return response()->json([
-            'errors' => ['message' => 'You have been succesfully logged out!']
-        ], 200);
+        return $this->success('You have been succesfully logged out!');
     }
 }
