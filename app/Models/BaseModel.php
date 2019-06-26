@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use DB;
 use Illuminate\Database\Eloquent\Model;
 
 abstract class BaseModel extends Model
@@ -20,5 +21,19 @@ abstract class BaseModel extends Model
         $logClass = __NAMESPACE__ . '\\Logs\\' . $className;
         (new $logClass)::create($dataLog);
         return $this;
+    }
+
+    public function removeLog()
+    {
+        $table = $this->table;
+        $itemDelete = DB::connection('mongodb')
+            ->collection($table)
+            ->orderBy('created_at', 'desc')
+            ->first();
+
+        return DB::connection('mongodb')
+            ->collection($table)
+            ->where('_id', $itemDelete['_id'])
+            ->delete();
     }
 }
