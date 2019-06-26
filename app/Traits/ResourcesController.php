@@ -44,32 +44,39 @@ trait ResourcesController
 
     protected function setResources()
     {
-        $this->setModels();
-        $this->defineJsonResource();
-        $this->defineResourceCollection();
+        $this->createModels();
+        $this->createJsonResource();
+        $this->createResourceCollection();
+        return $this;
     }
 
-    protected function setModels()
+    protected function createModels()
     {
-        $model = $this->model;
-        $this->Model = "App\\Models\\$model";
+        if (!isset($this->Model)) {
+            $model = $this->model;
+            $modelPath = "App\\Models\\$model";
+            $classExists = class_exists($modelPath);
+            $this->Model = $classExists ? $modelPath : "App\\$model";
+        }
     }
 
-    protected function defineJsonResource()
+    protected function createJsonResource()
     {
-        $this->defineResource($this->jsonResource, 'JsonResource');
+        $this->createResource($this->jsonResource, 'JsonResource');
     }
 
-    protected function defineResourceCollection()
+    protected function createResourceCollection()
     {
-        $this->defineResource($this->resourceCollection, 'ResourceCollection');
+        $this->createResource($this->resourceCollection, 'ResourceCollection');
     }
 
-    protected function defineResource($resource, $property)
+    protected function createResource($resource, $property)
     {
-        $scope = $this->scope;
-        $v = config('app.api_version');
-        $this->{$property} = "App\\Http\\Resources\\$scope\\v$v\\$resource";
+        if (!isset($this->{$property})) {
+            $scope = $this->scope;
+            $v = config('app.api_version');
+            $this->{$property} = "App\\Http\\Resources\\$scope\\v$v\\$resource";
+        }
     }
 
     /**

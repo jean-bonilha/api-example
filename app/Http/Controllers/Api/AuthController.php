@@ -14,13 +14,12 @@ class AuthController extends UserController
     {
         $storeResponse = $this->store($request);
 
-        if (gettype($storeResponse) === 'array') {
+        if (class_basename($storeResponse) === 'MessageBag') {
             $response = ['errors' => $storeResponse];
             return response($response, 422);
         }
 
-        $token = $storeResponse->createToken('Laravel Password Grant Client')->accessToken;
-        $response = ['token' => $token];
+        $response = ['message' => 'User created successfully!'];
 
         return response($response, 201);
     }
@@ -31,8 +30,9 @@ class AuthController extends UserController
 
         if ($user) {
             if (!boolval($user->activated)) {
-                $response = ['message' => 'User is not activated.'];
-                return response($response, 202);
+                return response()->json([
+                    'errors' => ['message' => 'User is not activated.']
+                ], 422);
             }
             if (Hash::check($request->password, $user->password)) {
                 $token = $user->createToken('Laravel Password Grant Client')->accessToken;
@@ -41,34 +41,40 @@ class AuthController extends UserController
                 $firebaseUserSave = (new FirebaseAuthController)->store($properties);
                 if (!$firebaseUserSave) {
                     return response()->json([
-                        'message' => 'Save user on Firebase service failed.'
-                    ]);
+                        'errors' => ['message' => 'Save user on Firebase service failed.']
+                    ], 422);
                 }
                 $response = ['token' => $token];
-                return response($response, 200);
+                return response($response, 201);
             } else {
-                $response = ['message' => 'Password missmatch'];
-                return response($response, 422);
+                return response()->json([
+                    'errors' => ['message' => 'Password missmatch.']
+                ], 422);
             }
         } else {
-            $response = ['message' => 'User does not exist'];
-            return response($response, 422);
+            return response()->json([
+                'errors' => ['message' => 'User does not exist.']
+            ], 422);
         }
     }
 
     public function logout(Request $request)
     {
         $user = $request->user();
-        $token = $user->token();
-        $token->revoke();
-        $response = [];
 
         $firebaseUserSave = (new FirebaseAuthController)->destroyByEmail($user->email);
+
         if (!$firebaseUserSave) {
-            $response['farebase'] = 'User logout on Firebase service failed.';
+            return response()->json([
+                'errors' => ['message' => 'User logout on Firebase service failed.']
+            ], 422);
         }
 
-        $response['message'] = 'You have been succesfully logged out!';
-        return response($response, 200);
+        $token = $user->token();
+        $token->revoke();
+
+        return response()->json([
+            'errors' => ['message' => 'You have been succesfully logged out!']
+        ], 200);
     }
 }

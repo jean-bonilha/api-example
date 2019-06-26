@@ -29,8 +29,8 @@ class AddSavedUserColumnToUsersTable extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('saved_user');
-        });
+        // Schema::table('users', function (Blueprint $table) {
+            // $table->dropColumn('saved_user');
+        // });
     }
 }

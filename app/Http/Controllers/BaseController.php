@@ -37,29 +37,19 @@ abstract class BaseController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \App\Models\BaseModel
      */
     public function store(Request $request)
     {
         $validator = $this->validator($request->all());
 
         if ($validator->fails()) {
-            return response()->json([
-                'message' => $validator->errors()
-            ], 422);
+            return $validator->errors();
         }
 
-        $this->setResources();
-        $dataStore = $this->setUserSave($request->all());
-        try {
-            return response()->json([
-                'message' => $this->Model::create($dataStore)
-            ], 201);
-        } catch (\Throwable $th) {
-            return response()->json([
-                'message' => $th->getMessage()
-            ], 422);
-        }
+        $dataStore = $this->setResources()->setUserSave($request->all());
+
+        return $this->Model::create($dataStore);
     }
 
     /**
@@ -74,11 +64,11 @@ abstract class BaseController extends Controller
         $resource = $this->Model::find($id);
         if ($resource) {
             return new $this->JsonResource(
-                $this->Model::find($id)
+                $resource
             );
         }
         return response()->json([
-            'message' => 'Resource not found.'
+            'errors' => ['message' => 'Resource not found.']
         ], 404);
     }
 
@@ -95,7 +85,7 @@ abstract class BaseController extends Controller
 
         if ($validator->fails()) {
             return response()->json([
-                'message' => $validator->errors()
+                'errors' => ['message' => $validator->errors()]
             ], 422);
         }
 
@@ -106,19 +96,19 @@ abstract class BaseController extends Controller
 
         if ($itemUpdate) {
             try {
-                $itemUpdate = $this->Model::find($id)->makeLog();
+                $this->Model::find($id)->makeLog()->update($dataUpdate);
                 return response()->json([
-                    'message' => $itemUpdate->update($dataUpdate)
+                    'message' => 'Data successfully updated!'
                 ], 200);
             } catch (\Throwable $th) {
                 return response()->json([
-                    'message' => $th->getMessage()
+                    'errors' => ['message' => $th->getMessage()]
                 ], 422);
             }
         }
 
         return response()->json([
-            'message' => 'Resource not found.'
+            'errors' => ['message' => 'Resource not found.']
         ], 404);
     }
 
@@ -131,20 +121,26 @@ abstract class BaseController extends Controller
     public function destroy($id)
     {
         $this->setResources();
+
         $itemDelete = $this->Model::find($id);
+
         if ($itemDelete) {
             try {
-                return response()->json([
-                    'message' => $itemDelete->makeLog('deleted')->delete()
-                ], 200);
+                $itemDelete->makeLog('deleted')->delete();
             } catch (\Throwable $th) {
+                $itemDelete->removeLog();
                 return response()->json([
-                    'message' => $th->getMessage()
+                    'errors' => ['message' => 'Resource not deleted.']
                 ], 422);
             }
+
+            return response()->json([
+                'message' => 'Data deleted successfully!'
+            ], 200);
         }
+
         return response()->json([
-            'message' => 'Resource not found.'
+            'errors' => ['message' => 'Resource not found.']
         ], 404);
     }
 }

@@ -3,28 +3,21 @@
 namespace App\Http\Controllers\Api;
 
 use Hash;
-use App\User;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\BaseController as Controller;
 use App\Http\Controllers\Firebase\FirebaseAuthController;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
-    private $validateFields = [
-        'name' => 'required|string|max:255',
-        'email' => 'required|string|email|max:255|unique:users',
-        'password' => 'required|string|min:6|confirmed',
-    ];
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function __construct()
     {
-        return User::all();
+        parent::__construct('User');
+        parent::setPaginate(10);
+        parent::setValidateFields([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:6|confirmed',
+        ]);
     }
 
     /**
@@ -35,33 +28,13 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), $this->validateFields);
-
-        if ($validator->fails()) {
-            return $validator->errors()->all();
+        if ($request['password'] === $request['password_confirmation']) {
+            $hashPassword = Hash::make($request['password']);
+            $request['password'] = $hashPassword;
+            $request['password_confirmation'] = $hashPassword;
         }
 
-        $firebaseUserSave = (new FirebaseAuthController)->store($request->all());
-
-        if (!$firebaseUserSave) {
-            return response()->json([
-                'message' => 'Save user on Firebase service failed.'
-            ]);
-        }
-
-        $request['password'] = Hash::make($request['password']);
-        return User::create($request->toArray());
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        return User::find($id);
+        return parent::store($request);
     }
 
     /**
@@ -73,45 +46,19 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $validateFields = $this->validateFields;
-        $validateFields['email'] = 'required|string|email|max:255';
-        $validator = Validator::make($request->all(), $validateFields);
+        $this->setResources();
 
-        if ($validator->fails()) {
-            return $validator->errors()->all();
-        }
+        $user = $this->Model::find($id);
 
-        $user = User::find($id);
-
-        if (is_null($user)) {
-            return response()->json([
-                'message' => 'User not exists.'
-            ]);
-        }
-
-        $firebaseUserUpdate = (new FirebaseAuthController)->update($request->all(), $user->email);
-
-        if (!$firebaseUserUpdate) {
-            return response()->json([
-                'message' => 'Update user on Firebase service failed.'
-            ]);
-        }
+        try {
+            (new FirebaseAuthController)->update($request->all(), $user->email);
+        } catch (\Throwable $th) { }
 
         if (isset($request['password'])) {
             $request['password'] = Hash::make($request['password']);
         }
 
-        $updated = $user->update($request->toArray());
-
-        if ($updated) {
-            return response()->json([
-                'message' => 'User updated successfully.'
-            ]);
-        }
-
-        return response()->json([
-            'message' => 'User update fail.'
-        ]);
+        return parent::update($request, $id);
     }
 
     /**
@@ -122,26 +69,24 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        $user = User::find($id);
+        $this->setResources();
 
-        if (is_null($user)) {
+        $user = $this->Model::find($id);
+
+        if ($user) {
+            try {
+                (new FirebaseAuthController)->destroyByEmail($user->email);
+            } catch (\Throwable $th) {
+                return response()->json([
+                    'errors' => ['message' => $th->getMessage()]
+                ], 422);
+            }
+        } else {
             return response()->json([
-                'message' => 'User not exists.'
-            ]);
+                'errors' => ['message' => 'Resource not found.']
+            ], 404);
         }
 
-        (new FirebaseAuthController)->destroyByEmail($user->email);
-
-        $deleted = $user->delete($id);
-
-        if ($deleted) {
-            return response()->json([
-                'message' => 'Delete user failed.'
-            ]);
-        }
-
-        return response()->json([
-            'message' => 'User was deleted with successfully.'
-        ]);
+        return parent::destroy($id);
     }
 }
