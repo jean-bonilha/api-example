@@ -11,22 +11,22 @@ trait ResponseController
         ], $status);
     }
 
-    public function success(string $message = 'success')
+    public function success($message = 'success')
     {
         return $this->response($message, 200);
     }
 
-    public function created(string $message = 'created')
+    public function created($message = 'created')
     {
         return $this->response($message, 201);
     }
 
-    public function badRequest(string $message = 'invalid request')
+    public function badRequest($message = 'invalid request')
     {
         return $this->response($message, 400);
     }
 
-    public function notFound(string $message = 'not found')
+    public function notFound($message = 'not found')
     {
         return $this->response($message, 404);
     }
@@ -36,7 +36,7 @@ trait ResponseController
         return $this->response($message, 422);
     }
 
-    public function error(string $message = 'an error occurred', int $status = 500)
+    public function error($message = 'an error occurred', int $status = 500)
     {
         return $this->response($message, $status);
     }
