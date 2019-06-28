@@ -17,7 +17,7 @@ class CompanyController extends Controller
             'codigo_descricao' => 'string|min:3',
             'grau_risco' => 'string|min:2|max:2',
             'grupo_risco' => 'string|min:5|max:5',
-            'saved_user' => 'integer',
+            'registered_by' => 'integer',
         ]);
     }
 }

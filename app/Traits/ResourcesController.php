@@ -99,7 +99,7 @@ trait ResourcesController
     }
 
     /**
-     * Sets saved_user field on $data array with current user.
+     * Sets registered_by field on $data array with current user.
      *
      * @param  array  $data optional
      * @return array  $data modified
@@ -107,7 +107,7 @@ trait ResourcesController
     protected function setUserSave($data)
     {
         if (Auth::check()) {
-            $data['saved_user'] = Auth::id();
+            $data['registered_by'] = Auth::id();
         }
         return $data;
     }

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddSavedUserColumnToUsersTable extends Migration
+class AddRegisteredByColumnToUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,11 +14,7 @@ class AddSavedUserColumnToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->bigInteger('saved_user')
-                ->after('remember_token')
-                ->unsigned()
-                ->nullable();
-            $table->foreign('saved_user')->references('id')->on('users');
+            //
         });
     }
 
@@ -29,8 +25,8 @@ class AddSavedUserColumnToUsersTable extends Migration
      */
     public function down()
     {
-        // Schema::table('users', function (Blueprint $table) {
-            // $table->dropColumn('saved_user');
-        // });
+        Schema::table('users', function (Blueprint $table) {
+            //
+        });
     }
 }

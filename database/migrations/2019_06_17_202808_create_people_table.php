@@ -36,8 +36,8 @@ class CreatePeopleTable extends Migration
             $table->string('nome_pai')->nullable();
             $table->string('ctps_numero')->nullable();
             $table->string('ctps_serie')->nullable();
-            $table->bigInteger('saved_user')->unsigned()->nullable();
-            $table->foreign('saved_user')->references('id')->on('users');
+            $table->bigInteger('registered_by')->unsigned()->nullable();
+            $table->foreign('registered_by')->references('id')->on('users');
             $table->timestamps();
         });
     }

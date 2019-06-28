@@ -35,7 +35,7 @@ class PersonController extends Controller
             'nome_pai' => 'string|min:3|max:255',
             'ctps_numero' => 'string|min:3|max:255',
             'ctps_serie' => 'string|min:3|max:255',
-            'saved_user' => 'integer',
+            'registered_by' => 'integer',
         ]);
     }
 }

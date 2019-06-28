@@ -12,6 +12,6 @@ $factory->define(Person::class, function (Faker $faker) {
         'rg' => $faker->randomNumber(8),
         'data_nascimento' => $faker->dateTimeBetween('-60 years', '-15 years'),
         'sexo' => $faker->randomElement(['M', 'F', 'T', 'O']),
-        'saved_user' => DB::table('users')->orderBy('id', 'desc')->first()->id,
+        'registered_by' => DB::table('users')->orderBy('id', 'desc')->first()->id,
     ];
 });
