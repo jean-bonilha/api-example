@@ -3,6 +3,7 @@
 namespace App\Http\Resources\Api\v1;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\User;
 
 class UserResource extends JsonResource
 {
@@ -14,6 +15,12 @@ class UserResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'email' => $this->email,
+            'registered_by' => $this->registered_by ? User::find($this->registered_by)->name : 'AUTO CADASTRO',
+            'activated' => $this->activated ? 'ATIVADO' : 'DESATIVADO',
+        ];
     }
 }
