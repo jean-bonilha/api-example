@@ -8,6 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 abstract class BaseModel extends Model
 {
     /**
+     * The number of models to return for pagination.
+     *
+     * @var int
+     */
+    protected $perPage = 10;
+
+    /**
      * Makes log from specific MySQL Model to equivalent collection.
      *
      * @param  string  $action (update|delete)

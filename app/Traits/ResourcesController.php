@@ -10,8 +10,6 @@ trait ResourcesController
     private $model;
     private $jsonResource;
     private $resourceCollection;
-
-    private $paginate;
     private $scope = 'Api';
 
     private $validateFields = [];
@@ -20,16 +18,6 @@ trait ResourcesController
         $this->model = $model;
         $this->jsonResource = $model . 'Resource';
         $this->resourceCollection = $model . 'Collection';
-    }
-
-    public function setPaginate($paginate)
-    {
-        $this->paginate = $paginate;
-    }
-
-    public function getPaginate()
-    {
-        return $this->paginate;
     }
 
     public function setValidateFields($validateFields)

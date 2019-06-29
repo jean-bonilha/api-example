@@ -19,17 +19,19 @@ abstract class BaseController extends Controller
     {
         $this->setResources();
 
-        $paginate = $this->paginate;
+        $model = new $this->Model;
+
+        $paginate = $model->getPerPage();
 
         if ($paginate) {
             return new $this->ResourceCollection(
-                $this->Model::paginate($paginate)
+                $model::paginate($paginate)
             );
         }
 
         return new $this->ResourceCollection(
             $this->JsonResource::collection(
-                $this->Model::all()
+                $model::all()
             )
         );
     }
