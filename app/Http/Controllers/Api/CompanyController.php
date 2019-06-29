@@ -9,7 +9,6 @@ class CompanyController extends Controller
     public function __construct()
     {
         parent::__construct('Company');
-        parent::setPaginate(10);
         parent::setValidateFields([
             'razao_social' => 'required|string|min:3|max:255',
             'nome_fantasia' => 'required|string|min:3|max:255',

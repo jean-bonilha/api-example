@@ -10,7 +10,6 @@ class PersonController extends Controller
     public function __construct()
     {
         parent::__construct('Person');
-        parent::setPaginate(10);
 
         $birthValidations = 'required|date|date_format:Y-m-d|before:now|after:-110 years';
         parent::setValidateFields([
