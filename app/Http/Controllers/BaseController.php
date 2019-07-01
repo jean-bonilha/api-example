@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Traits\ResourcesController;
 use App\Traits\ResponseController;
+use Illuminate\Support\Facades\Input;
 
 abstract class BaseController extends Controller
 {
@@ -19,20 +20,18 @@ abstract class BaseController extends Controller
     {
         $this->setResources();
 
-        $model = new $this->Model;
+        $filter = Input::get('filter');
 
-        $perPage = $model->getPerPage();
-
-        if ($perPage) {
+        if (!$filter) {
             return new $this->ResourceCollection(
-                $model::paginate($perPage)
+                $this->Model::paginate()
             );
         }
 
+        $filterBy = (new $this->Model)->getFilterBy();
+
         return new $this->ResourceCollection(
-            $this->JsonResource::collection(
-                $model::all()
-            )
+            $this->Model::where("$filterBy", 'like', "%$filter%")->paginate()
         );
     }
 
