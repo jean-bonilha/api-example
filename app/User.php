@@ -38,4 +38,11 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * The name of field for filter
+     *
+     * @var string
+     */
+    protected $filterBy = 'name';
 }
