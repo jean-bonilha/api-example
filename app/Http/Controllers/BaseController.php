@@ -21,11 +21,11 @@ abstract class BaseController extends Controller
 
         $model = new $this->Model;
 
-        $paginate = $model->getPerPage();
+        $perPage = $model->getPerPage();
 
-        if ($paginate) {
+        if ($perPage) {
             return new $this->ResourceCollection(
-                $model::paginate($paginate)
+                $model::paginate($perPage)
             );
         }
 
