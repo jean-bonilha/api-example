@@ -15,6 +15,34 @@ abstract class BaseModel extends Model
     protected $perPage = 10;
 
     /**
+     * The name of field for filter
+     *
+     * @var string
+     */
+    protected $filterBy = '';
+
+    /**
+     * Get the filterBy associated with the model.
+     *
+     * @return string
+     */
+    public function getFilterBy()
+    {
+        return $this->filterBy;
+    }
+
+    /**
+     * Set the filterBy associated with the model.
+     *
+     * @param  string  $filterBy
+     * @return $this
+     */
+    public function setFilterBy($filterBy)
+    {
+        $this->filterBy = $filterBy;
+    }
+
+    /**
      * Makes log from specific MySQL Model to equivalent collection.
      *
      * @param  string  $action (update|delete)
