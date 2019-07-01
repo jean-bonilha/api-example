@@ -10,4 +10,11 @@ class Company extends BaseModel
      * @var array
      */
     protected $guarded = [];
+
+    /**
+     * The name of field for filter
+     *
+     * @var string
+     */
+    protected $filterBy = 'razao_social';
 }

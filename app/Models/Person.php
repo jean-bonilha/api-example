@@ -10,4 +10,11 @@ class Person extends BaseModel
      * @var array
      */
     protected $guarded = [];
+
+    /**
+     * The name of field for filter
+     *
+     * @var string
+     */
+    protected $filterBy = 'nome';
 }
