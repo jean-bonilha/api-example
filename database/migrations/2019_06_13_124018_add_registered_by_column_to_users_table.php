@@ -14,7 +14,11 @@ class AddRegisteredByColumnToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            //
+            $table->bigInteger('registered_by')
+                ->after('activated')
+                ->nullable()
+                ->unsigned();
+            $table->foreign('registered_by')->references('id')->on('users');
         });
     }
 
@@ -26,7 +30,7 @@ class AddRegisteredByColumnToUsersTable extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            //
+
         });
     }
 }
