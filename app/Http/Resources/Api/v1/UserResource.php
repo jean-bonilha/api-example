@@ -21,6 +21,8 @@ class UserResource extends JsonResource
             'email' => $this->email,
             'registered_by' => $this->registered_by ? User::find($this->registered_by)->name : 'AUTO CADASTRO',
             'activated' => $this->activated ? 'ATIVADO' : 'DESATIVADO',
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
         ];
     }
 }
