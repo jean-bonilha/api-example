@@ -51,7 +51,15 @@ abstract class BaseController extends Controller
 
         $dataStore = $this->setResources()->setUserSave($request->all());
 
-        return $this->Model::create($dataStore);
+        $resource = $this->Model::create($dataStore);
+
+        if ($resource) {
+            return new $this->JsonResource(
+                $resource
+            );
+        }
+
+        return $this->unprocessable();
     }
 
     /**
