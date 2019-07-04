@@ -102,8 +102,13 @@ abstract class BaseController extends Controller
 
         if ($itemUpdate) {
             try {
-                $this->Model::find($id)->makeLog()->update($dataUpdate);
-                return $this->success();
+                $updated = $this->Model::find($id)->makeLog()->update($dataUpdate);
+                if ($updated) {
+                    return new $this->JsonResource(
+                        $this->Model::find($id)
+                    );
+                }
+                return $this->unprocessable($th->getMessage());
             } catch (\Throwable $th) {
                 return $this->unprocessable($th->getMessage());
             }
