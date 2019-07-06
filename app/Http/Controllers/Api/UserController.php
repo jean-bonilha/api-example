@@ -33,6 +33,14 @@ class UserController extends Controller
             $request['password_confirmation'] = $hashPassword;
         }
 
+        $this->setResources();
+
+        $user = $this->Model::where(['email' => $request->email])->first();
+
+        if ($user) {
+            return new $this->JsonResource($user);
+        }
+
         return parent::store($request);
     }
 
