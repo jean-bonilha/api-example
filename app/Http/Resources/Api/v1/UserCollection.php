@@ -23,6 +23,7 @@ class UserCollection extends ResourceCollection
                     'email' => $item->email,
                     'registered_by' => $item->registered_by ? User::find($item->registered_by)->name : 'AUTO CADASTRO',
                     'activated' => $item->activated ? 'ATIVADO' : 'DESATIVADO',
+                    'form' => 'user-store',
                 ];
             }),
         ];
