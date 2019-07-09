@@ -15,11 +15,18 @@ abstract class BaseModel extends Model
     protected $perPage = 10;
 
     /**
-     * The name of field for filter
+     * The name of field for filter by
      *
      * @var string
      */
     protected $filterBy = '';
+
+    /**
+     * The name of field for sort by
+     *
+     * @var string
+     */
+    protected $sortBy = '';
 
     /**
      * Get the filterBy associated with the model.
@@ -40,6 +47,27 @@ abstract class BaseModel extends Model
     public function setFilterBy($filterBy)
     {
         $this->filterBy = $filterBy;
+    }
+
+    /**
+     * Get the sortBy associated with the model.
+     *
+     * @return string
+     */
+    public function getSortBy()
+    {
+        return $this->sortBy;
+    }
+
+    /**
+     * Set the sortBy associated with the model.
+     *
+     * @param  string  $sortBy
+     * @return $this
+     */
+    public function setSortBy($sortBy)
+    {
+        $this->sortBy = $sortBy;
     }
 
     /**

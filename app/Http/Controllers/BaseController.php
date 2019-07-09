@@ -30,7 +30,9 @@ abstract class BaseController extends Controller
 
         if ($perPage) $modelResource->setPerPage($perPage);
 
-        $sort = $sort ? explode('|', $sort) : ['name', 'asc'];
+        $sortBy = $modelResource->getSortBy() ?: 'name';
+
+        $sort = $sort ? explode('|', $sort) : [$sortBy, 'asc'];
 
         if (!$filter) {
             return new $this->ResourceCollection(
