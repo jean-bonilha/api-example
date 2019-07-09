@@ -20,18 +20,30 @@ abstract class BaseController extends Controller
     {
         $this->setResources();
 
+        $modelResource = new $this->Model;
+
         $filter = Input::get('filter');
+
+        $perPage = Input::get('per_page');
+
+        $sort = Input::get('sort');
+
+        if ($perPage) $modelResource->setPerPage($perPage);
+
+        $sort = $sort ? explode('|', $sort) : ['name', 'asc'];
 
         if (!$filter) {
             return new $this->ResourceCollection(
-                $this->Model::paginate()
+                $modelResource::orderBy($sort[0], $sort[1])->paginate()
             );
         }
 
-        $filterBy = (new $this->Model)->getFilterBy();
+        $filterBy = $modelResource->getFilterBy();
 
         return new $this->ResourceCollection(
-            $this->Model::where("$filterBy", 'like', "%$filter%")->paginate()
+            $modelResource::where("$filterBy", 'like', "%$filter%")
+                ->orderBy($sort[0], $sort[1])
+                ->paginate()
         );
     }
 
