@@ -17,4 +17,11 @@ class Company extends BaseModel
      * @var string
      */
     protected $filterBy = 'razao_social';
+
+    /**
+     * The name of field for sort by
+     *
+     * @var string
+     */
+    protected $sortBy = 'razao_social';
 }
