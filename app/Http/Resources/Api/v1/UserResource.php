@@ -2,8 +2,8 @@
 
 namespace App\Http\Resources\Api\v1;
 
-use Illuminate\Http\Resources\Json\JsonResource;
 use App\User;
+use Illuminate\Http\Resources\Json\JsonResource;
 
 class UserResource extends JsonResource
 {

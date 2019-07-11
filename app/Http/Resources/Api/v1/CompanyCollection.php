@@ -2,8 +2,8 @@
 
 namespace App\Http\Resources\Api\v1;
 
-use Illuminate\Http\Resources\Json\ResourceCollection;
 use App\User;
+use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class CompanyCollection extends ResourceCollection
 {
