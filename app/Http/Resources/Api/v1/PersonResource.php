@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Api\v1;
 
+use App\User;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class PersonResource extends JsonResource
@@ -37,6 +38,7 @@ class PersonResource extends JsonResource
             'nome_pai' => $this->nome_pai,
             'ctps_numero' => $this->ctps_numero,
             'ctps_serie' => $this->ctps_serie,
+            'registered_by' => $this->registered_by ? User::find($this->registered_by)->name : 'AUTO CADASTRO',
         ];
     }
 }
