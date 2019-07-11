@@ -1,8 +1,8 @@
 <?php
 
-use App\User;
 namespace App\Http\Resources\Api\v1;
 
+use App\User;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class CompanyResource extends JsonResource
