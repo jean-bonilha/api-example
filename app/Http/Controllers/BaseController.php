@@ -30,7 +30,9 @@ abstract class BaseController extends Controller
 
         if ($perPage) $modelResource->setPerPage($perPage);
 
-        $sortBy = $modelResource->getSortBy() ?: 'name';
+        $filterBy = $modelResource->getFilterBy();
+
+        $sortBy = $modelResource->getSortBy() ?: $filterBy;
 
         $sort = $sort ? explode('|', $sort) : [$sortBy, 'asc'];
 
@@ -39,8 +41,6 @@ abstract class BaseController extends Controller
                 $modelResource::orderBy($sort[0], $sort[1])->paginate()
             );
         }
-
-        $filterBy = $modelResource->getFilterBy();
 
         return new $this->ResourceCollection(
             $modelResource::where("$filterBy", 'like', "%$filter%")
