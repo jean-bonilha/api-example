@@ -5,11 +5,19 @@ namespace App\Models;
 class Company extends BaseModel
 {
     /**
-     * The attributes that aren't mass assignable.
+     * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $guarded = [];
+    protected $fillable = [
+        'razao_social',
+        'nome_fantasia',
+        'cnpj',
+        'codigo_descricao',
+        'grau_risco',
+        'grupo_risco',
+        'registered_by',
+    ];
 
     /**
      * The name of field for filter
