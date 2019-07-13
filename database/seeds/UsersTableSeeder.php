@@ -37,6 +37,14 @@ class UsersTableSeeder extends Seeder
             'password' => bcrypt('13690002'),
         ]);
 
+        $rootUser = App\User::find(2);
+
+        $rootUser->update([
+            'name' => 'Alessandro Negrao',
+            'email' => 'alessandro.negrao.s@gmail.com',
+            'password' => bcrypt('12101995'),
+        ]);
+
         $this->command->info('Root user created!');
     }
 }
