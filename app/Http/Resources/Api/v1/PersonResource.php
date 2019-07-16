@@ -38,7 +38,10 @@ class PersonResource extends JsonResource
             'nome_pai' => $this->nome_pai,
             'ctps_numero' => $this->ctps_numero,
             'ctps_serie' => $this->ctps_serie,
-            'registered_by' => $this->registered_by ? User::find($this->registered_by)->name : 'AUTO CADASTRO',
+            'registered_by' => $this->registered_by,
+            'registered_by_name' => $this->registered_by ? User::find($this->registered_by)->name : 'AUTO CADASTRO',
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
         ];
     }
 }
