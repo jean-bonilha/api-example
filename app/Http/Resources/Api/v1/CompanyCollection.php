@@ -26,7 +26,6 @@ class CompanyCollection extends ResourceCollection
                     'grau_risco' => $item->grau_risco,
                     'grupo_risco' => $item->grupo_risco,
                     'registered_by' => $item->registered_by ? User::find($item->registered_by)->name : 'AUTO CADASTRO',
-                    'form' => 'company-form',
                 ];
             }),
         ];

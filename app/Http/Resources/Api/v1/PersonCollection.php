@@ -41,7 +41,6 @@ class PersonCollection extends ResourceCollection
                     'ctps_numero' => $item->ctps_numero,
                     'ctps_serie' => $item->ctps_serie,
                     'registered_by' => $item->registered_by ? User::find($item->registered_by)->name : 'AUTO CADASTRO',
-                    'form' => 'company-form',
                 ];
             }),
         ];
