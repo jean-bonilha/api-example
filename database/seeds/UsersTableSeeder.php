@@ -15,6 +15,11 @@ class UsersTableSeeder extends Seeder
 
         $count = (int)$this->command->ask('How to users do you need ?', 10);
 
+        if ($count < 2) {
+            $count = 2;
+            $this->command->info("The minor value for number of users need be {$count}.");
+        };
+
         $this->command->info("Creating {$count} users.");
 
         // Create the users
