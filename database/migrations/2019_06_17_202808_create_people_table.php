@@ -16,12 +16,12 @@ class CreatePeopleTable extends Migration
         Schema::create('people', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('nome');
-            $table->string('rg');
             $table->date('data_nascimento');
             $table->enum('sexo', ['M', 'F', 'T', 'O']);
+            $table->string('cpf', 11)->nullable();
+            $table->string('rg');
             $table->string('rg_orgao_uf_emissao')->nullable();
             $table->string('rg_data_expedicao')->nullable();
-            $table->string('cpf', 11)->nullable();
             $table->string('cnh')->nullable();
             $table->string('cnh_categoria')->nullable();
             $table->string('nis')->nullable();
@@ -31,11 +31,11 @@ class CreatePeopleTable extends Migration
             $table->string('nome_social')->nullable();
             $table->string('minicipio')->nullable();
             $table->string('uf', 2)->nullable();
-            $table->string('codigo_pais_nascimento')->nullable();
             $table->string('nome_mae')->nullable();
             $table->string('nome_pai')->nullable();
             $table->string('ctps_numero')->nullable();
             $table->string('ctps_serie')->nullable();
+            $table->string('codigo_pais_nascimento')->nullable();
             $table->bigInteger('registered_by')->unsigned()->nullable();
             $table->foreign('registered_by')->references('id')->on('users');
             $table->timestamps();
