@@ -21,7 +21,7 @@ class UserCollection extends ResourceCollection
                     'id' => $item->id,
                     'name' => $item->name,
                     'email' => $item->email,
-                    'registered_by' => $item->registered_by ? User::find($item->registered_by)->name : 'AUTO CADASTRO',
+                    'registered_by' => $item->registered_by ? User::find($item->registered_by)['name'] : 'AUTO CADASTRO',
                     'activated' => $item->activated ? 'ATIVADO' : 'DESATIVADO',
                 ];
             }),

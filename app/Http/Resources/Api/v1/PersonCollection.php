@@ -40,7 +40,7 @@ class PersonCollection extends ResourceCollection
                     'nome_pai' => $item->nome_pai,
                     'ctps_numero' => $item->ctps_numero,
                     'ctps_serie' => $item->ctps_serie,
-                    'registered_by' => $item->registered_by ? User::find($item->registered_by)->name : 'AUTO CADASTRO',
+                    'registered_by' => $item->registered_by ? User::find($item->registered_by)['name'] : 'AUTO CADASTRO',
                 ];
             }),
         ];
