@@ -24,7 +24,7 @@ class CompanyResource extends JsonResource
             'grau_risco' => $this->grau_risco,
             'grupo_risco' => $this->grupo_risco,
             'registered_by' => $this->registered_by,
-            'registered_by_name' => $this->registered_by ? User::find($this->registered_by)->name : 'AUTO CADASTRO',
+            'registered_by_name' => $this->registered_by ? User::find($this->registered_by)['name'] : 'AUTO CADASTRO',
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];
