@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
-use App\Models\Sector;
+use App\Models\Employee;
 use Illuminate\Http\Request;
 
-class SectorController extends Controller
+class EmployeeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class SectorController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Sector  $sector
+     * @param  \App\Models\Employee  $employee
      * @return \Illuminate\Http\Response
      */
-    public function show(Sector $sector)
+    public function show(Employee $employee)
     {
         //
     }
@@ -52,10 +52,10 @@ class SectorController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Sector  $sector
+     * @param  \App\Models\Employee  $employee
      * @return \Illuminate\Http\Response
      */
-    public function edit(Sector $sector)
+    public function edit(Employee $employee)
     {
         //
     }
@@ -64,10 +64,10 @@ class SectorController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Sector  $sector
+     * @param  \App\Models\Employee  $employee
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Sector $sector)
+    public function update(Request $request, Employee $employee)
     {
         //
     }
@@ -75,10 +75,10 @@ class SectorController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Sector  $sector
+     * @param  \App\Models\Employee  $employee
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Sector $sector)
+    public function destroy(Employee $employee)
     {
         //
     }
