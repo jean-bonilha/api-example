@@ -11,13 +11,13 @@ class SectorsTableSeeder extends Seeder
      */
     public function run()
     {
-        // How to many sectors you need, defaulting to 50
+        // How to many sectors you need, defaulting to 5
 
-        $this->command->info("Creating 50 sectors.");
+        $this->command->info("Creating 5 sectors.");
 
         // Create the sectors
 
-        factory(App\Models\Sector::class, 50)->create();
+        factory(App\Models\Sector::class, 5)->create();
 
         $this->command->info('Sectors created!');
     }
