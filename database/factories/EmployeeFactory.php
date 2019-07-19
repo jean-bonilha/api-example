@@ -4,13 +4,17 @@
 
 use App\Models\Employee;
 use Faker\Generator as Faker;
+use App\Models\Company;
+use App\Models\Person;
+use App\Models\Sector;
+use App\Models\Role;
 
 $factory->define(Employee::class, function (Faker $faker) {
     return [
-        'company_id' => DB::table('companies')->inRandomOrder()->get()->id,
-        'person_id' => DB::table('people')->inRandomOrder()->get()->id,
-        'sector_id' => DB::table('sectors')->inRandomOrder()->get()->id,
-        'role_id' => DB::table('roles')->inRandomOrder()->get()->id,
+        'company_id' => Company::inRandomOrder()->first()->id,
+        'person_id' => Person::inRandomOrder()->first()->id,
+        'sector_id' => Sector::inRandomOrder()->first()->id,
+        'role_id' => Role::inRandomOrder()->first()->id,
         'registered_by' => DB::table('users')->orderBy('id', 'desc')->first()->id,
     ];
 });
