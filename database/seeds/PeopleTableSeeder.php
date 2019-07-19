@@ -11,9 +11,9 @@ class PeopleTableSeeder extends Seeder
      */
     public function run()
     {
-        // How to many people you need, defaulting to 100
+        // How to many people you need, defaulting to 50
 
-        $this->command->info("Creating 100 people.");
+        $this->command->info("Creating 50 people.");
 
         // Create the people
 
