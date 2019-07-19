@@ -28,6 +28,7 @@ class UsersTableSeeder extends Seeder
             factory(App\User::class, 1)->create()->each(function ($user) {
                 $this->call(CompaniesTableSeeder::class);
                 $this->call(PeopleTableSeeder::class);
+                $this->call(EmployeesTableSeeder::class);
                 $this->call(SectorsTableSeeder::class);
                 $this->call(RolesTableSeeder::class);
             });
