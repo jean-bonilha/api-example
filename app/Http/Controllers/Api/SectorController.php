@@ -2,84 +2,19 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Models\Sector;
-use Illuminate\Http\Request;
+use App\Http\Controllers\BaseController as Controller;
 
 class SectorController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function __construct()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Sector  $sector
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Sector $sector)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Sector  $sector
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Sector $sector)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Sector  $sector
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Sector $sector)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Sector  $sector
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Sector $sector)
-    {
-        //
+        parent::__construct('Sector');
+        // parent::setValidateFields([
+        //     'razao_social' => 'required|string|min:3|max:255',
+        //     'nome_fantasia' => 'required|string|min:3|max:255',
+        //     'cnpj' => 'required|string|min:18|max:18|unique:companies',
+        //     'grau_risco' => 'string|min:2|max:2',
+        //     'grupo_risco' => 'string|min:5|max:5',
+        // ]);
     }
 }
