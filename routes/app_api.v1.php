@@ -13,5 +13,6 @@ Route::middleware('auth:api')->group(function () {
         'person' => 'PersonController',
         'employee' => 'EmployeeController',
         'sector' => 'SectorController',
+        'role' => 'RoleController',
     ]);
 });
