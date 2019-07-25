@@ -16,7 +16,6 @@ class EmployeeController extends Controller
             'person_id' => 'integer',
             'sector_id' => 'integer',
             'role_id' => 'integer',
-            'registered_by' => 'integer',
         ]);
     }
 
