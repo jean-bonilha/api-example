@@ -24,13 +24,13 @@ class EmployeeCollection extends ResourceCollection
                 return [
                     'id' => $item->id,
                     'company_id' => $item->company_id,
-                    'company_name' => Company::find($item->company_id)->razao_social,
+                    'company_name' => Company::find($item->company_id)['razao_social'],
                     'person_id' => $item->person_id,
-                    'person_name' => Person::find($item->person_id)->nome,
+                    'person_name' => Person::find($item->person_id)['nome'],
                     'sector_id' => $item->sector_id,
-                    'sector_name' => Sector::find($item->sector_id)->nome,
+                    'sector_name' => Sector::find($item->sector_id)['nome'],
                     'role_id' => $item->role_id,
-                    'role_name' => Role::find($item->role_id)->nome,
+                    'role_name' => Role::find($item->role_id)['nome'],
                     'registered_by' => $item->registered_by ? User::find($item->registered_by)['name'] : 'AUTO CADASTRO',
                 ];
             }),
