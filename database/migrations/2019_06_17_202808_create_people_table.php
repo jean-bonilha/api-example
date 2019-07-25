@@ -18,8 +18,8 @@ class CreatePeopleTable extends Migration
             $table->string('nome');
             $table->date('data_nascimento');
             $table->enum('sexo', ['M', 'F', 'T', 'O']);
-            $table->string('cpf', 11)->nullable();
             $table->string('rg');
+            $table->string('cpf', 11)->nullable();
             $table->string('rg_orgao_uf_emissao')->nullable();
             $table->string('rg_data_expedicao')->nullable();
             $table->string('cnh')->nullable();
