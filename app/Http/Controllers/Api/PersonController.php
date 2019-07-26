@@ -30,7 +30,6 @@ class PersonController extends Controller
             'uf' => 'string|min:2|max:2',
             'ctps_numero' => 'string|min:3|max:255',
             'ctps_serie' => 'string|min:3|max:255',
-            'registered_by' => 'integer',
         ]);
     }
 }
