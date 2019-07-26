@@ -29,6 +29,7 @@ class UsersTableSeeder extends Seeder
                 $this->call(CompaniesTableSeeder::class);
                 $this->call(PeopleTableSeeder::class);
                 $this->call(SectorsTableSeeder::class);
+                $this->call(WorkstationsTableSeeder::class);
                 $this->call(RolesTableSeeder::class);
                 $this->call(EmployeesTableSeeder::class);
             });
