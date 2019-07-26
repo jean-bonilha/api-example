@@ -10,7 +10,7 @@ class SectorController extends Controller
     {
         parent::__construct('Sector');
         parent::setValidateFields([
-            'nome' => 'required|string|min:3|max:255',
+            'nome' => 'required|string|min:2|max:255',
         ]);
     }
 }
