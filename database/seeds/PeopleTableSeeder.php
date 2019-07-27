@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\Models\Logs\Person;
 
 class PeopleTableSeeder extends Seeder
 {
@@ -11,6 +12,8 @@ class PeopleTableSeeder extends Seeder
      */
     public function run()
     {
+        // Truncate people collection on MongoDB
+        Person::truncate();
         // How to many people you need, defaulting to 50
 
         $this->command->info("Creating 50 people.");

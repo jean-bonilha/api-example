@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\Models\Logs\Role;
 
 class RolesTableSeeder extends Seeder
 {
@@ -11,6 +12,8 @@ class RolesTableSeeder extends Seeder
      */
     public function run()
     {
+        // Truncate roles collection on MongoDB
+        Role::truncate();
         // How to many roles you need, defaulting to 5
 
         $this->command->info("Creating 5 roles.");

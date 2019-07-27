@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\Models\Logs\User;
 
 class UsersTableSeeder extends Seeder
 {
@@ -11,6 +12,8 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
+        // Truncate users collection on MongoDB
+        User::truncate();
         // How to many users you need, defaulting to 10
 
         $count = (int)$this->command->ask('How to users do you need ?', 10);
