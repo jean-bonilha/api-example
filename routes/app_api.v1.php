@@ -15,5 +15,6 @@ Route::middleware('auth:api')->group(function () {
         'sector' => 'SectorController',
         'role' => 'RoleController',
         'workstation' => 'WorkstationController',
+        'collaborator' => 'CollaboratorController',
     ]);
 });
