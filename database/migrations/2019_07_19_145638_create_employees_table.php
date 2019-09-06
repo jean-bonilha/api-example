@@ -16,10 +16,10 @@ class CreateEmployeesTable extends Migration
         Schema::create('employees', function (Blueprint $table) {
             $table->bigIncrements('id');
 
-            $table->bigInteger('company_id')->unsigned()->nullable();
+            $table->bigInteger('company_id')->unsigned();
             $table->foreign('company_id')->references('id')->on('companies');
 
-            $table->bigInteger('person_id')->unsigned()->nullable();
+            $table->bigInteger('person_id')->unsigned();
             $table->foreign('person_id')->references('id')->on('people');
 
             $table->bigInteger('sector_id')->unsigned()->nullable();
