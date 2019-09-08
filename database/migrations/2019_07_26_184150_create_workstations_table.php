@@ -15,7 +15,7 @@ class CreateWorkstationsTable extends Migration
     {
         Schema::create('workstations', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('nome');
+            $table->string('nome')->unique();
             $table->bigInteger('registered_by')->unsigned()->nullable();
             $table->foreign('registered_by')->references('id')->on('users');
             $table->timestamps();
