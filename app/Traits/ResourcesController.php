@@ -14,7 +14,7 @@ trait ResourcesController
 
     private $validateFields = [];
 
-    public function __construct(string $model) {
+    public function __construct(string $model = null) {
         $this->model = $model;
         $this->jsonResource = $model . 'Resource';
         $this->resourceCollection = $model . 'Collection';
